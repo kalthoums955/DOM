@@ -26,6 +26,7 @@ function ready() {
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
 }
 
+
 function purchaseClicked() {
     alert('Thank you for your purchase')
     var cartItems = document.getElementsByClassName('cart-items')[0]
@@ -37,7 +38,7 @@ function purchaseClicked() {
 
 function removeCartItem(event) {
     var buttonClicked = event.target
-    buttonClicked.parentElement.parentElement.remove()
+    buttonClicked.parentElement.parentElement.parentElement.remove()
     updateCartTotal()
 }
 
@@ -102,3 +103,40 @@ function updateCartTotal() {
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
 }
+
+
+
+
+
+
+// gets a reference to the heartDOm
+const heartDOM = document.querySelectorAll('.js-heart');
+// initialized like to false when user hasnt selected
+let liked = false;
+
+// create a onclick listener
+heartDOM.forEach((item)=>{
+    item
+    .onclick = (event) => {
+        // check if liked 
+        liked = !liked; // toggle the like ( flipping the variable)
+        
+        // this is what we clicked on
+        const target = event.currentTarget;
+        
+        if (liked) {
+            // remove empty heart if liked and add the full heart
+            target.classList.remove('far');
+            target.classList.add('fas', 'pulse');
+        } else {
+            // remove full heart if unliked and add empty heart
+            target.classList.remove('fas');
+            target.classList.add('far');
+        }
+    }
+})
+
+
+heartDOM.addEventListener('animationend', (event) => {
+	event.currentTarget.classList.remove('pulse');
+})
